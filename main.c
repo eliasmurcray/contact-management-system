@@ -32,9 +32,27 @@ void remove_user(struct DiscordUser** users, size_t* len, long id) {
 }
 
 void print_users(struct DiscordUser* users, size_t len) {
-	for (size_t i = 0; i < len; i++){
+	for (size_t i = 0; i < len; i++) {
 		printf("%s (%ld)\n", users[i].name, users[i].id);	
 	}
+}
+
+void print_user(struct DiscordUser* user_ptr) {
+	if (user_ptr == NULL) {
+		printf("User not found\n");
+	} else {
+		struct DiscordUser user = *user_ptr;
+		printf("DiscordUser{name=\"%s\",id=%ld}\n", user.name, user.id);
+	}
+}
+
+struct DiscordUser* find_user(struct DiscordUser* users, size_t len, long id) {
+	for (size_t i = 0; i < len; i++) {
+		if (users[i].id == id) {
+			return &users[i];
+		}
+	}
+	return NULL;
 }
 
 int main() {
@@ -48,6 +66,12 @@ int main() {
 	remove_user(&users, &len, 724416180097384498);
 	
 	print_users(users, len);
+
+	struct DiscordUser* user_ptr = find_user(users, len, 163437468522250240);
+	print_user(user_ptr);
+
+	user_ptr = find_user(users, len, 724416180097384498);
+	print_user(user_ptr);
 
 	free(users);
 	
