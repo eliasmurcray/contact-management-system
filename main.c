@@ -17,7 +17,7 @@ void add_user(struct DiscordUser** users, size_t* len, char* name, long id) {
 }
 
 int main() {
-	struct DiscordUser* users = (struct DiscordUser*)malloc(2 * sizeof(struct DiscordUser));
+	struct DiscordUser* users = (struct DiscordUser*) malloc(0);
 	
 	size_t len = 0;
 	add_user(&users, &len, "Aliquis", 163437468522250240);
