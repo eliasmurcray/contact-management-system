@@ -74,9 +74,9 @@ int main() {
 				printf("Enter name: ");
 				scanf("%39s", name);
 				if (strlen(name) == 0) {
-                                        printf("Name is too short\n");
+					printf("Name is too short\n");
 					break;
-                                }
+				}
 				printf("Enter Discord ID: ");
 				scanf("%ld", &id);
 				printf("Adding user...\n");
