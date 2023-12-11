@@ -31,6 +31,12 @@ void remove_user(struct DiscordUser** users, size_t* len, long id) {
 	*len -= 1;
 }
 
+void print_users(struct DiscordUser* users, size_t len) {
+	for (size_t i = 0; i < len; i++){
+		printf("%s (%ld)\n", users[i].name, users[i].id);	
+	}
+}
+
 int main() {
 	struct DiscordUser* users = (struct DiscordUser*) malloc(0);
 	
@@ -40,11 +46,9 @@ int main() {
 	add_user(&users, &len, "WKoA", 724416180097384498);
 	
 	remove_user(&users, &len, 724416180097384498);
-
-	for (int i = 0; i < len; i++) {
-		printf("%s (%ld)\n", users[i].name, users[i].id);
-	}
 	
+	print_users(users, len);
+
 	free(users);
 	
 	return 0;
