@@ -10,7 +10,8 @@ struct DiscordUser {
 
 void add_user(struct DiscordUser** users, size_t* len, const char* name, const long id) {
 	struct DiscordUser new_user;
-	strcpy(new_user.name, name);
+	strncpy(new_user.name, name, 39);
+	new_user.name[39] = '\0';
 	new_user.id = id;
 	*users = (struct DiscordUser*) realloc(*users, *len + 1);
 	(*users)[*len] = new_user;
@@ -55,6 +56,21 @@ struct DiscordUser* find_user(struct DiscordUser* users, size_t len, long id) {
 	return NULL;
 }
 
+long prompt_id() {
+	long id;
+	while (1) {
+		printf("Enter Discord ID: ");
+		if (scanf("%ld", &id) != 1) {
+			printf("Error, invalid input. Please enter a long.\n");
+			int c;
+            		while ((c = getchar()) != '\n' && c != EOF);
+		} else {
+			break;
+		}
+	}
+	return id;
+}
+
 int main() {
 	struct DiscordUser* users = (struct DiscordUser*) malloc(0);
 	
@@ -70,24 +86,20 @@ int main() {
 		switch (choice) {
 			case 1: {
 				char name[40];
-				long id;
 				printf("Enter name: ");
-				scanf("%39s", name);
+				scanf("%s", name);
 				if (strlen(name) == 0) {
 					printf("Name is too short\n");
 					break;
 				}
-				printf("Enter Discord ID: ");
-				scanf("%ld", &id);
+				long id = prompt_id();
 				printf("Adding user...\n");
 				add_user(&users, &len, name, id);
 				printf("Added user successfully.\n");
 				break;
 			}
 			case 2: {
-				long id;
-				printf("Enter Discord ID: ");
-				scanf("%ld", &id);
+				long id = prompt_id();
 				printf("Deleting user...\n");
 				delete_user(&users, &len, id);
 				printf("Deleted user successfully.\n");
@@ -99,9 +111,7 @@ int main() {
 				break;
 			}
 			case 4: {
-				long id;
-				printf("Enter Discord ID: ");
-				scanf("%ld", &id);
+				long id = prompt_id();
 				struct DiscordUser* user_ptr = find_user(users, len, id);
 				printf("Result: ");
 				print_user(user_ptr);
@@ -109,13 +119,15 @@ int main() {
 			}
 			case 5: {
 				printf("Exiting program...\n");
+				free(users);
 				break;
 			}
 			default:
 				printf("Invalid choice, please try again.\n");
 		}
 	}
-	free(users);
+	
+	// free(users);
 	
 	return 0;
 }
