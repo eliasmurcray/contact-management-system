@@ -8,7 +8,7 @@ struct DiscordUser {
 	long id;
 };
 
-void add_user(struct DiscordUser** users, size_t* len, const char* name, const long id) {
+void add_user(struct DiscordUser **users, size_t *len, const char *name, const long id) {
 	struct DiscordUser new_user;
 	strncpy(new_user.name, name, 39);
 	new_user.name[39] = '\0';
@@ -18,7 +18,7 @@ void add_user(struct DiscordUser** users, size_t* len, const char* name, const l
 	*len += 1;
 }
 
-void delete_user(struct DiscordUser** users, size_t* len, long id) {
+void delete_user(struct DiscordUser **users, size_t *len, long id) {
 	bool swap = false;
 	for (size_t i = 0; i < *len - 1; i++) {
 		if ((*users)[i].id == id) {
@@ -32,13 +32,13 @@ void delete_user(struct DiscordUser** users, size_t* len, long id) {
 	*len -= 1;
 }
 
-void print_users(struct DiscordUser* users, size_t len) {
+void print_users(struct DiscordUser *users, size_t len) {
 	for (size_t i = 0; i < len; i++) {
 		printf("%s (%ld)\n", users[i].name, users[i].id);	
 	}
 }
 
-void print_user(struct DiscordUser* user_ptr) {
+void print_user(struct DiscordUser *user_ptr) {
 	if (user_ptr == NULL) {
 		printf("User not found\n");
 	} else {
@@ -47,7 +47,7 @@ void print_user(struct DiscordUser* user_ptr) {
 	}
 }
 
-struct DiscordUser* find_user(struct DiscordUser* users, size_t len, long id) {
+struct DiscordUser *find_user(struct DiscordUser *users, size_t len, long id) {
 	for (size_t i = 0; i < len; i++) {
 		if (users[i].id == id) {
 			return &users[i];
@@ -72,7 +72,7 @@ long prompt_id() {
 }
 
 int main() {
-	struct DiscordUser* users = (struct DiscordUser*) malloc(0);
+	struct DiscordUser *users = (struct DiscordUser*) malloc(0);
 	
 	size_t len = 0;
 	add_user(&users, &len, "Aliquis", 163437468522250240);
@@ -112,7 +112,7 @@ int main() {
 			}
 			case 4: {
 				long id = prompt_id();
-				struct DiscordUser* user_ptr = find_user(users, len, id);
+				struct DiscordUser *user_ptr = find_user(users, len, id);
 				printf("Result: ");
 				print_user(user_ptr);
 				break;
@@ -126,8 +126,6 @@ int main() {
 				printf("Invalid choice, please try again.\n");
 		}
 	}
-	
-	// free(users);
 	
 	return 0;
 }
